@@ -37,8 +37,8 @@ export default function App() {
     "longitudeDelta": 0.1
   });
   
-
-  GetLocation.getCurrentPosition({
+useEffect(() => {
+    GetLocation.getCurrentPosition({
     enableHighAccuracy: true,
     timeout: 15000,
   })
@@ -47,12 +47,25 @@ export default function App() {
       "latitude" : location.latitude,
       "longitude" : location.longitude,
       });
+
+      const url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?' + 'location=' + location.latitude +
+       ',' + location.longitude + '&radius=16093.4&type=restaurant&key=AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
+        fetch(url)
+            .then((response) => response.json())
+            .then((JsonResponse) => {
+                // console.error(JsonResponse)
+                console.warn(JsonResponse.results)
+            })
+            .catch((error) => {
+                alert('error')
+            });
+
     })
     .catch(error => {
       const { code, message } = error;
       console.warn(code, message);
     })
-
+}, []);
     
   return (
     <View style={styles.body}>
@@ -91,12 +104,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-/*      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      /> */
