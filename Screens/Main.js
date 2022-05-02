@@ -87,7 +87,8 @@
            renderItem={({item, i}) => (
              <Card style={styles.card}>
                <Card.Title>{item.name}</Card.Title>
-               <Text>{item.vicinity}</Text>
+               <Text style={{alignItems: 'center'}}>{item.vicinity}</Text>
+               <Card.Divider />
                <Button
                title={'Choose'}
                onPress={() => setChosen(chosen.concat(item))}

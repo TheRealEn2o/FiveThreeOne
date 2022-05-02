@@ -25,8 +25,4 @@ const Results = ({ route, navigation }) => {
         </View>
     )
 }
-/*{places.map((place) =>
-          (
-              <Text>{place.name}</Text>   
-          ))} */
 export default Results;
