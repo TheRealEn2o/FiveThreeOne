@@ -99,7 +99,7 @@ const Main = ({ route, navigation }) => {
               <Text>Select 5</Text>
               <Button title="Done" onPress={() => {
                 if (state.chosen.length == 5) {
-                  navigation.navigate('Results', state.chosen);
+                  navigation.navigate('PickThree', state.chosen);
                 }
               }} />
             </View>
