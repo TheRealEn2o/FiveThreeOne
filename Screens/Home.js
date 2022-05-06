@@ -56,30 +56,4 @@ const Home = ({ navigation }) => {
 
     )
 }
-/*        <View style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}>
-            <Text style={{ fontSize: 48 }}>
-                5 3 1!
-            </Text>
-            <Picker
-                selectedValue={selectedRange}
-                onValueChange={(itemValue, itemIndex) =>
-                    setSelectedRange(itemValue)
-                }
-                mode='dropdown'
-                prompt='Select Range in Miles'
-                >
-                <Picker.Item label="5" value="5" />
-                <Picker.Item label="10" value="10" />
-                <Picker.Item label="15" value="15" />
-                <Picker.Item label="20" value="20" />
-                <Picker.Item label="25" value="25" />
-            </Picker>
-            <Button
-                title={"Start"}
-                onPress={() => navigation.navigate('Main')} />
-        </View> */
 export default Home;

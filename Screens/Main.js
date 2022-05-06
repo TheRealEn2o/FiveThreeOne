@@ -38,6 +38,7 @@ const Main = ({ route, navigation }) => {
     "longitude": 24.7385084,
     "latitudeDelta": 0.1,
     "longitudeDelta": 0.1,
+    "noResults": false,
     "chosen": []
   });
 
@@ -62,18 +63,40 @@ const Main = ({ route, navigation }) => {
         fetch(url)
           .then((response) => response.json())
           .then((JsonResponse) => {
-            let tmp = new Array(JsonResponse.results.length);
-
+            let tmp = new Array();
+            var j = 0;
             for (var i = 0; i < JsonResponse.results.length; i++) {
-              tmp[i] = JsonResponse.results[i];
+              if (JsonResponse.results[i].business_status == "OPERATIONAL") {
+                if ("opening_hours" in JsonResponse.results[i]) {
+                  if (JsonResponse.results[i].opening_hours.open_now) {
+                    tmp[j] = JsonResponse.results[i];
+                    j++;
+                  }
+                }
+                else {
+                  tmp[j] = JsonResponse.results[i];
+                  j++;
+                }
+              }
             }
 
             setPlaces(tmp);
-            setstate({
-              ...state,
-              "locationEnabled": true,
-              "loading": false,
-            });
+            if (tmp.length == 0) {
+
+              setstate({
+                ...state,
+                "locationEnabled": true,
+                "loading": false,
+                "noResults": true,
+              });
+            }
+            else {
+              setstate({
+                ...state,
+                "locationEnabled": true,
+                "loading": false,
+              });
+            }
 
           }
           )
@@ -97,74 +120,79 @@ const Main = ({ route, navigation }) => {
 
       {state.loading ? <ActivityIndicator size="large" /> :
         state.locationEnabled ?
-          <View>
-            <View style={{ alignItems: 'center' }}>
-              <Text>Select 5</Text>
-              <Button title="Done" onPress={() => {
-                if (state.chosen.length == 5) {
-                  navigation.navigate('Results', state.chosen);
-                }
-                else if (state.chosen.length < 5) {
-                  let need =  5 - state.chosen.length;
-                  Alert.alert("You need to pick " + need + " more restaurants.");
-                }
-              }} />
-            </View>
-            <FlatList
-              data={places}
-              keyExtractor={(item) => item.place_id}
-              renderItem={({ item, i }) => (
-                <Card containerStyle={{minWidth: 320}}>
-                  <Card.Title>{item.name}</Card.Title>
-                  <Card.Divider />
 
-                  <View style={styles.card}>
-                    {'photos' in item ?
-                      <View style={styles.cardLeft}>
-                        <Image
-                          style={styles.image}
-                          resizeMode="cover"
-                          source={{
-                            uri: 'https://maps.googleapis.com/maps/api/place/photo' +
-                              '?maxwidth=' + 400 +
+          state.noResults ?
+            <Text style={{alignItems: 'center', justifyContent: 'center'}}>No restaurants are open in the range you provided. Try later or increase your range.</Text> :
+            <View>
+              <View style={{ alignItems: 'center' }}>
+                <Text>Select 5</Text>
+                <Button title="Done" onPress={() => {
+                  if (state.chosen.length == 5) {
+                    navigation.navigate('PickThree', state.chosen);
+                  }
+                  else if (state.chosen.length < 5) {
+                    let need = 5 - state.chosen.length;
+                    Alert.alert("You need to pick " + need + " more restaurants.");
+                  }
+                }} />
+              </View>
+              <FlatList
+                data={places}
+                keyExtractor={(item) => item.place_id}
+                renderItem={({ item, i }) => (
+                  <Card containerStyle={{ minWidth: 320 }}>
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Divider />
 
-                              '&photo_reference=' + item.photos[0].photo_reference +
-                              '&key=' + API_KEY
-                          }} />
-                      </View> : <></>}
+                    <View style={styles.card}>
+                      {'photos' in item ?
+                        <View style={styles.cardLeft}>
+                          <Image
+                            style={styles.image}
+                            resizeMode="cover"
+                            source={{
+                              uri: 'https://maps.googleapis.com/maps/api/place/photo' +
+                                '?maxwidth=' + 400 +
 
-                    <View style={styles.cardRight}>
-                      <Text>{item.vicinity}</Text>
+                                '&photo_reference=' + item.photos[0].photo_reference +
+                                '&key=' + API_KEY
+                            }} />
+                        </View> : <></>}
 
-                      <Button
-                        title={'Choose'}
-                        onPress={() => {
-                          let flag = false;
-                          state.chosen.forEach( x => {
-                            if(item.place_id == x.place_id){
-                              flag = true}
-                          })
-                          if(!flag && state.chosen.length < 5){
-                            setstate({
+                      <View style={styles.cardRight}>
+                        <Text>{item.vicinity}</Text>
+
+                        <Button
+                          title={'Choose'}
+                          onPress={() => {
+                            let flag = false;
+                            state.chosen.forEach(x => {
+                              if (item.place_id == x.place_id) {
+                                flag = true
+                              }
+                            })
+                            if (!flag && state.chosen.length < 5) {
+                              setstate({
                                 ...state,
                                 "chosen": state.chosen.concat(item),
-                            })}
+                              })
+                            }
                             else if (state.chosen.length >= 5) {
                               Alert.alert("You cannot pick more than 5 restaurants.");
                             }
-                            else{
-                                Alert.alert("This restaurant is already added");
+                            else {
+                              Alert.alert("This restaurant is already added");
                             }
-                        }}
-                      />
+                          }}
+                        />
+                      </View>
                     </View>
-                  </View>
-                </Card>
+                  </Card>
 
-              )}
-              style={styles.list}
-            />
-          </View> :
+                )}
+                style={styles.list}
+              />
+            </View> :
           <View>
             <Text>Please Enable Location Services </Text>
             <Button title="Enable" onPress={() => getPlaces()} />
