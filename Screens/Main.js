@@ -137,11 +137,14 @@ const Main = ({ route, navigation }) => {
                             if(item.place_id == x.place_id){
                               flag = true}
                           })
-                          if(!flag){
+                          if(!flag && state.chosen.length < 5){
                             setstate({
                                 ...state,
                                 "chosen": state.chosen.concat(item),
                             })}
+                            else if (state.chosen.length >= 5) {
+                              Alert.alert("You cannot pick more than 5 restaurants.");
+                            }
                             else{
                                 Alert.alert("This restaurant is already added");
                             }
