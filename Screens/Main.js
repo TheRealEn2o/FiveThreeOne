@@ -101,6 +101,10 @@ const Main = ({ route, navigation }) => {
                 if (state.chosen.length == 5) {
                   navigation.navigate('Results', state.chosen);
                 }
+                else if (state.chosen.length < 5) {
+                  let need =  5 - state.chosen.length;
+                  Alert.alert("You need to pick " + need + " more restaurants.");
+                }
               }} />
             </View>
             <FlatList
