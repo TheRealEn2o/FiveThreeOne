@@ -8,15 +8,13 @@
 
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   FlatList,
   ActivityIndicator,
+  Image,
+  Alert
 } from 'react-native';
 
 import GetLocation from 'react-native-get-location';
@@ -24,6 +22,8 @@ import GetLocation from 'react-native-get-location';
 import { Card, Button } from '@rneui/themed';
 
 import Geocoder from 'react-native-geocoding';
+
+const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
 
 const Main = ({ route, navigation }) => {
   const range = route.params * 1609.34;
@@ -55,7 +55,7 @@ const Main = ({ route, navigation }) => {
         });
 
         const url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?' + 'location=' + location.latitude +
-          ',' + location.longitude + '&radius=' + range + '&type=restaurant&key=AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
+          ',' + location.longitude + '&radius=' + range + '&type=restaurant&key=' + API_KEY;
 
         fetch(url)
           .then((response) => response.json())
@@ -84,84 +84,129 @@ const Main = ({ route, navigation }) => {
             });
           });
       })
-    }
-    useEffect(() => {
-      getPlaces();
-    }, []);
+  }
+  useEffect(() => {
+    getPlaces();
+  }, []);
 
-    return (
-      <View style={styles.body}>
+  return (
+    <View style={styles.body}>
 
-        {state.loading ? <ActivityIndicator size="large" /> :
-          state.locationEnabled ?
-            <View>
-              <View style={{ alignItems: 'center' }}>
-                <Text>Select 5 {console.log("Places Length:" + places.length)}</Text>
-                <Button title="Done" onPress={() => {
-                  if (state.chosen.length == 5) {
-                    navigation.navigate('Results', state.chosen);
-                  }
-                }} />
-              </View>
-              <FlatList
-                data={places}
-                keyExtractor={(item) => item.place_id}
-                renderItem={({ item, i }) => (
-                  <Card style={styles.card}>
-                    <Card.Title>{item.name}</Card.Title>
-                    <Text style={{ alignItems: 'center' }}>{item.vicinity}</Text>
-                    <Card.Divider />
-                    <Button
-                      title={'Choose'}
-                      onPress={() => setstate({
-                        ...state,
-                        "chosen": state.chosen.concat(item),
-                      })}
-                    />
-                  </Card>
-                )}
-                style={styles.list}
-              />
-            </View> :
-            <View>
-              <Text>Please Enable Location Services {console.log(state.locationEnabled)}</Text>
-              <Button title="Enable" onPress={() => getPlaces()} />
+      {state.loading ? <ActivityIndicator size="large" /> :
+        state.locationEnabled ?
+          <View>
+            <View style={{ alignItems: 'center' }}>
+              <Text>Select 5</Text>
+              <Button title="Done" onPress={() => {
+                if (state.chosen.length == 5) {
+                  navigation.navigate('Results', state.chosen);
+                }
+              }} />
             </View>
-        }
-      </View>
-    );
-  };
+            <FlatList
+              data={places}
+              keyExtractor={(item) => item.place_id}
+              renderItem={({ item, i }) => (
+                <Card containerStyle={{minWidth: 320}}>
+                  <Card.Title>{item.name}</Card.Title>
+                  <Card.Divider />
 
-  const styles = StyleSheet.create({
-    sectionContainer: {
-      marginTop: 32,
-      paddingHorizontal: 24,
-    },
-    sectionTitle: {
-      fontSize: 24,
-      fontWeight: '600',
-    },
-    sectionDescription: {
-      marginTop: 8,
-      fontSize: 18,
-      fontWeight: '400',
-    },
-    highlight: {
-      fontWeight: '700',
-    },
-    body: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    list: {
-      width: '95%',
-      margin: 30,
-      padding: 5,
-    },
-    card: {
-      alignItems: 'center',
-    }
-  });
+                  <View style={styles.card}>
+                    {'photos' in item ?
+                      <View style={styles.cardLeft}>
+                        <Image
+                          style={styles.image}
+                          resizeMode="cover"
+                          source={{
+                            uri: 'https://maps.googleapis.com/maps/api/place/photo' +
+                              '?maxwidth=' + 400 +
 
-  export default Main;
+                              '&photo_reference=' + item.photos[0].photo_reference +
+                              '&key=' + API_KEY
+                          }} />
+                      </View> : <></>}
+
+                    <View style={styles.cardRight}>
+                      <Text>{item.vicinity}</Text>
+
+                      <Button
+                        title={'Choose'}
+                        onPress={() => {
+                          let flag = false;
+                          state.chosen.forEach( x => {
+                            if(item.place_id == x.place_id){
+                              flag = true}
+                          })
+                          if(!flag){
+                            setstate({
+                                ...state,
+                                "chosen": state.chosen.concat(item),
+                            })}
+                            else{
+                                Alert.alert("This restaurant is already added");
+                            }
+                        }}
+                      />
+                    </View>
+                  </View>
+                </Card>
+
+              )}
+              style={styles.list}
+            />
+          </View> :
+          <View>
+            <Text>Please Enable Location Services </Text>
+            <Button title="Enable" onPress={() => getPlaces()} />
+          </View>
+      }
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  list: {
+    width: '95%',
+    margin: 30,
+    padding: 5,
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  image: {
+    height: 100,
+    width: 120,
+  },
+  cardLeft: {
+    flex: 1,
+    width: '50%',
+  },
+  cardRight: {
+    flex: 1,
+    width: '50%',
+  }
+});
+
+export default Main;
