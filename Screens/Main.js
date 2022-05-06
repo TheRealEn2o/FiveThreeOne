@@ -14,7 +14,8 @@ import {
   FlatList,
   ActivityIndicator,
   Image,
-  Alert
+  Alert,
+  ImageBackground
 } from 'react-native';
 
 import GetLocation from 'react-native-get-location';
@@ -24,6 +25,7 @@ import { Card, Button } from '@rneui/themed';
 import Geocoder from 'react-native-geocoding';
 
 const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
+const imageSRC = {uri: "https://i.pinimg.com/736x/11/6c/07/116c0701b419544cad5d13fc26138422.jpg"};
 
 const Main = ({ route, navigation }) => {
   const range = route.params * 1609.34;
@@ -91,6 +93,7 @@ const Main = ({ route, navigation }) => {
 
   return (
     <View style={styles.body}>
+      <ImageBackground source={imageSRC} style={styles.background}>
 
       {state.loading ? <ActivityIndicator size="large" /> :
         state.locationEnabled ?
@@ -167,6 +170,7 @@ const Main = ({ route, navigation }) => {
             <Button title="Enable" onPress={() => getPlaces()} />
           </View>
       }
+      </ImageBackground>
     </View>
   );
 };
@@ -213,7 +217,14 @@ const styles = StyleSheet.create({
   cardRight: {
     flex: 1,
     width: '50%',
-  }
+  },
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '60%',
+    height: '70%',
+  },
 });
 
 export default Main;

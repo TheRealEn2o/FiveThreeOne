@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, ImageBackground } from 'react-native'
 import { Button } from '@rneui/themed'
 import { Picker } from '@react-native-picker/picker'
+
+const imageSRC = {uri: "https://i.pinimg.com/736x/11/6c/07/116c0701b419544cad5d13fc26138422.jpg"};
 
 const Home = ({ navigation }) => {
     const [selectedRange, setSelectedRange] = useState();
@@ -11,7 +13,14 @@ const Home = ({ navigation }) => {
             alignItems: 'center',
             justifyContent: 'center',
         }}>
-            <Text style={{ fontSize: 48 }}>
+        <ImageBackground source={imageSRC} style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            height: '100%',
+        }}>
+            <Text style={{  color: 'white', fontSize: 90, fontFamily: 'BratsyScriptDemoReguler-9YYB0' }}>
                 5 3 1!
             </Text>
             <Picker
@@ -42,6 +51,7 @@ const Home = ({ navigation }) => {
                         Alert.alert("Please select a range");
                     }
                     }} />
+            </ImageBackground>
         </View>
 
     )
