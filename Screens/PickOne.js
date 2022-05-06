@@ -4,25 +4,16 @@ import { Card, Button } from '@rneui/themed'
 
 const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
 
-const PickThree = ({ route, navigation }) => {
-  let chosen = new Array();
+const PickOne = ({ route, navigation }) => {
+
   return (
     <View style={{
       flex: 1,
       alignItems: 'center',
     }}>
       <Text>
-        Next Player, choose 3 out of the 5
+        Lastly, choose 1 out of the 3
       </Text>
-      <Button title="Done" onPress={() => {
-        if (chosen.length == 3) {
-          navigation.navigate('PickOne', chosen);
-        }
-        else if (chosen.length < 3) {
-          let need =  3 - chosen.length;
-          Alert.alert("You need to pick " + need + " more restaurants.");
-        }
-      }} />
 
       <FlatList
         data={route.params}
@@ -53,21 +44,7 @@ const PickThree = ({ route, navigation }) => {
                 <Button
                   title={'Choose'}
                   onPress={() => {
-                    let flag = false;
-                    chosen.forEach(x => {
-                      if (item.place_id == x.place_id) {
-                        flag = true
-                      }
-                    })
-                    if (!flag && chosen.length < 3) {
-                      chosen.push(item);
-                    }
-                    else if (chosen.length >= 3) {
-                      Alert.alert("You cannot pick more than 3 restaurants.");
-                    }
-                    else {
-                      Alert.alert("This restaurant is already added");
-                    }
+                    navigation.navigate('FinalChoice', item);
                   }}
                 />
               </View>
@@ -98,4 +75,4 @@ const styles = StyleSheet.create({
     width: '50%',
   }
 });
-export default PickThree;
+export default PickOne;
