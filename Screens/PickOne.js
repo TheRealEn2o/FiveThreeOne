@@ -1,18 +1,20 @@
 import React from 'react'
-import { View, Text, FlatList, StyleSheet, Image, Alert } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Image, Alert, ImageBackground } from 'react-native'
 import { Card, Button } from '@rneui/themed'
 
 const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
+const imageSRC = { uri: "https://i.pinimg.com/originals/62/ac/64/62ac645d12a7f15aa0c6a1664e704bf8.jpg" };
+
 
 const PickOne = ({ route, navigation }) => {
-
   return (
     <View style={{
       flex: 1,
       alignItems: 'center',
     }}>
-      <Text>
-        Lastly, choose 1 out of the 3
+       <ImageBackground source={imageSRC} style={styles.background}>
+      <Text style={styles.title}>
+        Lastly, Select 1
       </Text>
 
       <FlatList
@@ -43,6 +45,7 @@ const PickOne = ({ route, navigation }) => {
 
                 <Button
                   title={'Choose'}
+                  color="#FCB1A0"
                   onPress={() => {
                     navigation.navigate('FinalChoice', item);
                   }}
@@ -54,6 +57,7 @@ const PickOne = ({ route, navigation }) => {
         )}
         style={styles.list}
       />
+      </ImageBackground>
     </View>
   )
 }
@@ -73,6 +77,26 @@ const styles = StyleSheet.create({
   cardRight: {
     flex: 1,
     width: '50%',
-  }
+  },
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  list: {
+    top: 40
+  },
+  title: {
+    color: 'black',
+    fontSize: 40,
+    fontFamily: 'PublicPixel-0W5Kv',
+    textAlign: 'center',
+    top: 30
+  },
+  done: {
+    top: 40
+  },
 });
 export default PickOne;

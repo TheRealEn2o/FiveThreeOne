@@ -15,17 +15,18 @@ import {
   ActivityIndicator,
   Image,
   Alert,
-  ImageBackground
+  ImageBackground,
+  Button
 } from 'react-native';
 
 import GetLocation from 'react-native-get-location';
 
-import { Card, Button } from '@rneui/themed';
+import { Card } from '@rneui/themed';
 
 import Geocoder from 'react-native-geocoding';
 
 const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
-const imageSRC = {uri: "https://i.pinimg.com/736x/11/6c/07/116c0701b419544cad5d13fc26138422.jpg"};
+const imageSRC = { uri: "https://i.pinimg.com/originals/62/ac/64/62ac645d12a7f15aa0c6a1664e704bf8.jpg" };
 
 const Main = ({ route, navigation }) => {
   const range = route.params * 1609.34;
@@ -118,86 +119,89 @@ const Main = ({ route, navigation }) => {
     <View style={styles.body}>
       <ImageBackground source={imageSRC} style={styles.background}>
 
-      {state.loading ? <ActivityIndicator size="large" /> :
-        state.locationEnabled ?
+        {state.loading ? <ActivityIndicator size="large" /> :
+          state.locationEnabled ?
 
-          state.noResults ?
-            <Text style={{alignItems: 'center', justifyContent: 'center'}}>No restaurants are open in the range you provided. Try later or increase your range.</Text> :
-            <View>
-              <View style={{ alignItems: 'center' }}>
-                <Text>Select 5</Text>
-                <Button title="Done" onPress={() => {
-                  if (state.chosen.length == 5) {
-                    navigation.navigate('PickThree', state.chosen);
-                  }
-                  else if (state.chosen.length < 5) {
-                    let need = 5 - state.chosen.length;
-                    Alert.alert("You need to pick " + need + " more restaurants.");
-                  }
-                }} />
-              </View>
-              <FlatList
-                data={places}
-                keyExtractor={(item) => item.place_id}
-                renderItem={({ item, i }) => (
-                  <Card containerStyle={{ minWidth: 320 }}>
-                    <Card.Title>{item.name}</Card.Title>
-                    <Card.Divider />
+            state.noResults ?
+              <Text style={{ alignItems: 'center', justifyContent: 'center' }}>No restaurants are open in the range you provided. Try later or increase your range.</Text> :
+              <View>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={styles.title}>Select 5</Text>
+                  <View style={styles.done}>
+                    <Button title="Done" color="#3E658E" onPress={() => {
+                      if (state.chosen.length == 5) {
+                        navigation.navigate('PickThree', state.chosen);
+                      }
+                      else if (state.chosen.length < 5) {
+                        let need = 5 - state.chosen.length;
+                        Alert.alert("You need to pick " + need + " more restaurants.");
+                      }
+                    }} />
+                  </View>
+                </View>
+                <FlatList
+                  data={places}
+                  keyExtractor={(item) => item.place_id}
+                  renderItem={({ item, i }) => (
+                    <Card containerStyle={{ minWidth: 320 }}>
+                      <Card.Title>{item.name}</Card.Title>
+                      <Card.Divider />
 
-                    <View style={styles.card}>
-                      {'photos' in item ?
-                        <View style={styles.cardLeft}>
-                          <Image
-                            style={styles.image}
-                            resizeMode="cover"
-                            source={{
-                              uri: 'https://maps.googleapis.com/maps/api/place/photo' +
-                                '?maxwidth=' + 400 +
+                      <View style={styles.card}>
+                        {'photos' in item ?
+                          <View style={styles.cardLeft}>
+                            <Image
+                              style={styles.image}
+                              resizeMode="cover"
+                              source={{
+                                uri: 'https://maps.googleapis.com/maps/api/place/photo' +
+                                  '?maxwidth=' + 400 +
 
-                                '&photo_reference=' + item.photos[0].photo_reference +
-                                '&key=' + API_KEY
-                            }} />
-                        </View> : <></>}
+                                  '&photo_reference=' + item.photos[0].photo_reference +
+                                  '&key=' + API_KEY
+                              }} />
+                          </View> : <></>}
 
-                      <View style={styles.cardRight}>
-                        <Text>{item.vicinity}</Text>
+                        <View style={styles.cardRight}>
+                          <Text>{item.vicinity}</Text>
 
-                        <Button
-                          title={'Choose'}
-                          onPress={() => {
-                            let flag = false;
-                            state.chosen.forEach(x => {
-                              if (item.place_id == x.place_id) {
-                                flag = true
-                              }
-                            })
-                            if (!flag && state.chosen.length < 5) {
-                              setstate({
-                                ...state,
-                                "chosen": state.chosen.concat(item),
+                          <Button
+                            title={'Choose'}
+                            color="#FCB1A0"
+                            onPress={() => {
+                              let flag = false;
+                              state.chosen.forEach(x => {
+                                if (item.place_id == x.place_id) {
+                                  flag = true
+                                }
                               })
-                            }
-                            else if (state.chosen.length >= 5) {
-                              Alert.alert("You cannot pick more than 5 restaurants.");
-                            }
-                            else {
-                              Alert.alert("This restaurant is already added");
-                            }
-                          }}
-                        />
+                              if (!flag && state.chosen.length < 5) {
+                                setstate({
+                                  ...state,
+                                  "chosen": state.chosen.concat(item),
+                                })
+                              }
+                              else if (state.chosen.length >= 5) {
+                                Alert.alert("You cannot pick more than 5 restaurants.");
+                              }
+                              else {
+                                Alert.alert("This restaurant is already added");
+                              }
+                            }}
+                          />
+                        </View>
                       </View>
-                    </View>
-                  </Card>
+                    </Card>
 
-                )}
-                style={styles.list}
-              />
-            </View> :
-          <View>
-            <Text>Please Enable Location Services </Text>
-            <Button title="Enable" onPress={() => getPlaces()} />
-          </View>
-      }
+                  )}
+                  style={styles.list}
+                />
+              </View> :
+            <View>
+              <Text>Please Enable Location Services </Text>
+              <Button title="Enable" onPress={() => getPlaces()} />
+            </View>
+        }
       </ImageBackground>
     </View>
   );
@@ -250,8 +254,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '60%',
-    height: '70%',
+    width: '100%',
+    height: '100%',
+  },
+  title: {
+    fontFamily: 'PublicPixel-0W5Kv',
+    fontSize: 40,
+    color: 'black',
+    top: 20
+  },
+  done: {
+    top: 35,
+    width: 100
   },
 });
 

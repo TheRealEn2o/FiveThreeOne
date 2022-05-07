@@ -35,6 +35,10 @@
 		993506F6C224431BBC4B0003 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B74301500BC4D1089C556BF /* Octicons.ttf */; };
 		42C331AE12F74542AFB6AEF6 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91A5D39D8AD2456181B4724D /* SimpleLineIcons.ttf */; };
 		FE95AE5EB4874B29AC145E12 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B29A0B571AD44FCB44AAAA8 /* Zocial.ttf */; };
+		B5DE9F364F6F47458A1E3A2D /* orange juice 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 537F094A5EB8410F86DE6D54 /* orange juice 2.0.ttf */; };
+		9D2DA3C52D9A4A3B9A4CF615 /* ARCADECLASSIC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1D09C46AD67A422F8A7E243A /* ARCADECLASSIC.TTF */; };
+		19C9448EFEE94E7C83F57CF5 /* ARCADECLASSIC.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00C15720513A42D3A4A6D79C /* ARCADECLASSIC.ttf */; };
+		F14BCED9D1C94556AC79214E /* PublicPixel-0W5Kv.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 983CF8F0274D4E0A8D156CB0 /* PublicPixel-0W5Kv.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +90,10 @@
 		9B74301500BC4D1089C556BF /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		91A5D39D8AD2456181B4724D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9B29A0B571AD44FCB44AAAA8 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		537F094A5EB8410F86DE6D54 /* orange juice 2.0.ttf */ = {isa = PBXFileReference; name = "orange juice 2.0.ttf"; path = "../assets/fonts/orange juice 2.0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1D09C46AD67A422F8A7E243A /* ARCADECLASSIC.TTF */ = {isa = PBXFileReference; name = "ARCADECLASSIC.TTF"; path = "../assets/fonts/ARCADECLASSIC.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		00C15720513A42D3A4A6D79C /* ARCADECLASSIC.ttf */ = {isa = PBXFileReference; name = "ARCADECLASSIC.ttf"; path = "../assets/fonts/ARCADECLASSIC.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		983CF8F0274D4E0A8D156CB0 /* PublicPixel-0W5Kv.ttf */ = {isa = PBXFileReference; name = "PublicPixel-0W5Kv.ttf"; path = "../assets/fonts/PublicPixel-0W5Kv.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +223,10 @@
 				9B74301500BC4D1089C556BF /* Octicons.ttf */,
 				91A5D39D8AD2456181B4724D /* SimpleLineIcons.ttf */,
 				9B29A0B571AD44FCB44AAAA8 /* Zocial.ttf */,
+				537F094A5EB8410F86DE6D54 /* orange juice 2.0.ttf */,
+				1D09C46AD67A422F8A7E243A /* ARCADECLASSIC.TTF */,
+				00C15720513A42D3A4A6D79C /* ARCADECLASSIC.ttf */,
+				983CF8F0274D4E0A8D156CB0 /* PublicPixel-0W5Kv.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -337,6 +349,10 @@
 				993506F6C224431BBC4B0003 /* Octicons.ttf in Resources */,
 				42C331AE12F74542AFB6AEF6 /* SimpleLineIcons.ttf in Resources */,
 				FE95AE5EB4874B29AC145E12 /* Zocial.ttf in Resources */,
+				B5DE9F364F6F47458A1E3A2D /* orange juice 2.0.ttf in Resources */,
+				9D2DA3C52D9A4A3B9A4CF615 /* ARCADECLASSIC.TTF in Resources */,
+				19C9448EFEE94E7C83F57CF5 /* ARCADECLASSIC.ttf in Resources */,
+				F14BCED9D1C94556AC79214E /* PublicPixel-0W5Kv.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
