@@ -25,12 +25,12 @@ import { Card } from '@rneui/themed';
 
 import Geocoder from 'react-native-geocoding';
 
-const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
+const API_KEY = '';
 const imageSRC = { uri: "https://i.pinimg.com/originals/62/ac/64/62ac645d12a7f15aa0c6a1664e704bf8.jpg" };
 
 const Main = ({ route, navigation }) => {
   const range = route.params * 1609.34;
-  Geocoder.init("AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I");
+  Geocoder.init(API_KEY);
 
   const [state, setstate] = useState({
     "loading": true,

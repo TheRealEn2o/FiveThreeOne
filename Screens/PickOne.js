@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, FlatList, StyleSheet, Image, Alert, ImageBackground } from 'react-native'
 import { Card, Button } from '@rneui/themed'
 
-const API_KEY = 'AIzaSyCRi8kUBAKMnpQ9JdY8e2v9qnEZmAjO65I';
+const API_KEY = '';
 const imageSRC = { uri: "https://i.pinimg.com/originals/62/ac/64/62ac645d12a7f15aa0c6a1664e704bf8.jpg" };
 
 
